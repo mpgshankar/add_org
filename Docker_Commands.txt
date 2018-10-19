@@ -1,0 +1,19 @@
+docker service rm hyperledger-ca_ca0 hyperledger-ca_ca1 hyperledger-couchdb_couchdb0 hyperledger-couchdb_couchdb2 hyperledger-couchdb_couchdb1 hyperledger-couchdb_couchdb3 hyperledger-orderer_orderer0 hyperledger-peer_peer0_org1 hyperledger-peer_peer0_org2 hyperledger-peer_peer1_org1 hyperledger-peer_peer1_org2 hyperledger-cli_cli hyperledger-peer_peer0_org3 hyperledger-peer_peer1_org3 hyperledger-cli_Org3cli hyperledger-couchdb_couchdb4 hyperledger-couchdb_couchdb5 hyperledger-cli_testcli hyperledger-couchdb_couchdbtest0 hyperledger-couchdb_couchdbtest1 hyperledger-peer_peer0_test1 hyperledger-peer_peer1_test1
+
+docker rm $(docker ps -aq) -f
+
+docker network create --attachable --driver overlay --subnet=10.200.1.0/24 hyperledger-ov
+
+docker stack deploy -c hyperledger-orderer.yaml hyperledger-orderer
+docker stack deploy -c hyperledger-couchdb.yaml hyperledger-couchdb
+docker stack deploy -c hyperledger-peer.yaml hyperledger-peer
+docker stack deploy -c hyperledger-ca.yaml hyperledger-ca
+docker stack deploy -c hyperledger-cli.yaml hyperledger-cli
+
+export CHANNEL_NAME="mychannel"
+export CLI_DELAY=3
+export CLI_TIMEOUT=10
+export LANGUAGE=golang
+
+docker exec  hyperledger-cli_cli.1.4bvdtcc9jgept3o9xiqiwenbq scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT
+

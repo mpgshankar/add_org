@@ -1,0 +1,10 @@
+export DOMAIN="test.com"
+export ORGNAME="org-test"
+export ORGS=2
+export PEERS=2
+export SERVERUSER="dell"
+export SERVERIP="192.168.5.114"
+export SERVERCONFIGPATH="/home/dell/Cateina/Add-Org/fabric-samples/first-network/crypto-config"
+export CLIENTUSER="lenovo"
+export CLIENTIP="192.168.5.137"
+export CLIENTCONFIGPATH="/home/lenovo/Cateina/Add-Org/custom-genConfig"
